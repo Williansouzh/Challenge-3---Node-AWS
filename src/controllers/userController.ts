@@ -1,10 +1,11 @@
-import UserModel from "@/database/models/userModel";
-import IUser from "@/interfaces/userInterface";
-import UserService from "@/services/userService";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
+import UserService from "@/services/userService";
+import { BadRequestError } from "@/helpers/api-errors";
+import IUser from "@/interfaces/userInterface";
+
 class UserController {
-  static async signUp(req: Request, res: Response) {
+  static async signUp(req: Request, res: Response, next: NextFunction) {
     const {
       firstName,
       lastName,
@@ -19,11 +20,13 @@ class UserController {
     try {
       const emailExists = await UserService.checkEmailExist(email);
       if (emailExists) {
-        return res.status(400).json("Email already exists");
+        throw new BadRequestError("Email already exists");
       }
+
       if (password !== confirmPassword) {
-        return res.status(400).json("divergent passwords");
+        throw new BadRequestError("Divergent passwords");
       }
+
       const newUser: IUser = {
         firstName,
         lastName,
@@ -33,11 +36,16 @@ class UserController {
         email,
         password: await bcrypt.hash(password, 10),
       };
+
       await UserService.signUp(newUser);
-      return res.status(201).json("User created");
-    } catch (error) {}
+
+      return res.status(201).json({ message: "User created" });
+    } catch (error) {
+      next(error);
+    }
   }
-  static async signIn() {}
+
+  static async signIn(req: Request, res: Response) {}
 }
 
 export default UserController;

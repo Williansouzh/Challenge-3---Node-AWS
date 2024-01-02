@@ -6,5 +6,7 @@ import Router from "express";
 const userRoutes = Router();
 
 userRoutes.post("/user/sign-up", validateUserData, UserController.signUp);
+
+userRoutes.post("/user/sign-in", UserController.signIn);
 userRoutes.use(handleJoiValidationError);
 export default userRoutes;
