@@ -9,7 +9,7 @@ const userSchema = new Schema<IUser & Document>({
   country: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  confirmPassword: { type: String, required: true },
+  confirmPassword: { type: String, required: false },
 });
 
 const UserModel = mongoose.model<IUser & Document>("User", userSchema);

@@ -17,6 +17,10 @@ class UserController {
     } = req.body;
 
     try {
+      const emailExists = await UserService.checkEmailExist(email);
+      if (emailExists) {
+        return res.status(400).json("Email already exists");
+      }
       if (password !== confirmPassword) {
         return res.status(400).json("divergent passwords");
       }
@@ -30,6 +34,7 @@ class UserController {
         password: await bcrypt.hash(password, 10),
       };
       await UserService.signUp(newUser);
+      return res.status(201).json("User created");
     } catch (error) {}
   }
   static async signIn() {}
