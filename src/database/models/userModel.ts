@@ -1,7 +1,7 @@
 // userModel.ts
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import IUser from "@/interfaces/userInterface";
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser & Document>({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   birthDate: { type: Date, required: true },
@@ -12,6 +12,6 @@ const userSchema = new Schema<IUser>({
   confirmPassword: { type: String, required: true },
 });
 
-const UserModel = mongoose.model<IUser>("User", userSchema);
+const UserModel = mongoose.model<IUser & Document>("User", userSchema);
 
 export default UserModel;

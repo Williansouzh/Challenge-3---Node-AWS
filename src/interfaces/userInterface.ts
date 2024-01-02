@@ -1,6 +1,6 @@
-import {Document} from "mongoose";
+import { Document } from "mongoose";
 
-interface IUser extends Document {
+interface IUser {
   firstName: string;
   lastName: string;
   birthDate: Date;
@@ -8,7 +8,7 @@ interface IUser extends Document {
   country: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }
 
 export default IUser;
