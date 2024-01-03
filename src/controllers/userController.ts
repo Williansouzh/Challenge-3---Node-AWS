@@ -1,12 +1,33 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import UserService from "@/services/userService";
 import { BadRequestError } from "@/helpers/api-errors";
 import IUser from "@/interfaces/userInterface";
 import UserModel from "@/database/models/userModel";
-import jwt from "jsonwebtoken";
+
+interface SignUpRequest extends Request {
+  body: {
+    firstName: string;
+    lastName: string;
+    birthDate: string;
+    city: string;
+    country: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
+}
+
+interface SignInRequest extends Request {
+  body: {
+    email: string;
+    password: string;
+  };
+}
+
 class UserController {
-  static async signUp(req: Request, res: Response, next: NextFunction) {
+  static async signUp(req: SignUpRequest, res: Response, next: NextFunction) {
     const {
       firstName,
       lastName,
@@ -31,7 +52,7 @@ class UserController {
       const newUser: IUser = {
         firstName,
         lastName,
-        birthDate,
+        birthDate: new Date(birthDate),
         city,
         country,
         email,
@@ -46,31 +67,39 @@ class UserController {
     }
   }
 
-  static async signIn(req: Request, res: Response) {
+  static async signIn(req: SignInRequest, res: Response, next: NextFunction) {
     const { email, password } = req.body;
 
-    const user = await UserModel.findOne({ email });
+    try {
+      const user = await UserModel.findOne({ email });
 
-    if (!user) {
-      throw new BadRequestError("Email or password invalid");
+      if (!user) {
+        throw new BadRequestError("Email or password invalid");
+      }
+
+      const verifyPass = await bcrypt.compare(password, user.password);
+
+      if (!verifyPass) {
+        throw new BadRequestError("Email or password invalid");
+      }
+
+      const token = jwt.sign(
+        { id: user.id },
+        process.env.JWT_SECRET_KEY ?? "",
+        {
+          expiresIn: "8h",
+        }
+      );
+
+      const { firstName, lastName, email: string } = user.toObject();
+
+      return res.json({
+        user: { firstName, lastName, email },
+        token,
+      });
+    } catch (error) {
+      next(error);
     }
-
-    const verifyPass = await bcrypt.compare(password, user.password);
-
-    if (!verifyPass) {
-      throw new BadRequestError("Email or password invalid");
-    }
-
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY ?? "", {
-      expiresIn: "8h",
-    });
-
-    const { password: _, ...userLogin } = user;
-
-    return res.json({
-      user: userLogin,
-      token: token,
-    });
   }
 }
 
