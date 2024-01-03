@@ -19,7 +19,7 @@ class EventController {
     }
   }
   static async getById(req: Request, res: Response, next: NextFunction) {
-    const id: string = req.body.id;
+    const id: string = req.params.id;
     try {
       const event = await EventService.getByID(id);
       res.json(event);
@@ -41,6 +41,20 @@ class EventController {
     try {
       const deletedEvent = await EventService.deleteEvent(id);
       res.json(deletedEvent);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+  static async WeeklyEventDeletion(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const week: string = req.body.week;
+    try {
+      const WeeklyEventDelete = await EventService.WeeklyEventDeletion(week);
+      res.json(WeeklyEventDelete);
     } catch (error) {
       console.log(error);
       next(error);

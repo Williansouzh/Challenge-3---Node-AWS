@@ -66,6 +66,25 @@ class EventService {
     }
     return deletedEvent;
   }
+  static WeeklyEventDeletion(week: string) {
+    try {
+      const events = EventModel.find({ week });
+
+      if (!events) {
+        throw new NotFoundError(`No events found in week ${week}`);
+      }
+
+      return events;
+    } catch (error) {
+      console.log(error);
+      throw new ApiError(
+        "Error occurred while delete weekly events",
+        500,
+        "internal_error",
+        "EventService.WeeklyEventDeletion"
+      );
+    }
+  }
 }
 
 export default EventService;
