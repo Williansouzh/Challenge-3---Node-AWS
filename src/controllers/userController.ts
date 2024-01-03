@@ -3,7 +3,8 @@ import bcrypt from "bcrypt";
 import UserService from "@/services/userService";
 import { BadRequestError } from "@/helpers/api-errors";
 import IUser from "@/interfaces/userInterface";
-
+import UserModel from "@/database/models/userModel";
+import jwt from "jsonwebtoken";
 class UserController {
   static async signUp(req: Request, res: Response, next: NextFunction) {
     const {
@@ -45,7 +46,32 @@ class UserController {
     }
   }
 
-  static async signIn(req: Request, res: Response) {}
+  static async signIn(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      throw new BadRequestError("Email or password invalid");
+    }
+
+    const verifyPass = await bcrypt.compare(password, user.password);
+
+    if (!verifyPass) {
+      throw new BadRequestError("Email or password invalid");
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY ?? "", {
+      expiresIn: "8h",
+    });
+
+    const { password: _, ...userLogin } = user;
+
+    return res.json({
+      user: userLogin,
+      token: token,
+    });
+  }
 }
 
 export default UserController;
