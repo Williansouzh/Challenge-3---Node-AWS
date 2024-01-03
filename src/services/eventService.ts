@@ -1,5 +1,5 @@
 import EventModel from "@/database/models/eventModel";
-import { ApiError } from "@/helpers/api-errors";
+import { ApiError, BadRequestError, NotFoundError } from "@/helpers/api-errors";
 import { IEvent } from "@/interfaces/eventInterface";
 
 class EventService {
@@ -34,6 +34,37 @@ class EventService {
         "EventService.getAllEvents"
       );
     }
+  }
+  static async getByID(id: string) {
+    try {
+      const event = await EventModel.findById(id);
+
+      if (!event) {
+        throw new NotFoundError("Event not found");
+      }
+      return event;
+    } catch (error) {
+      throw new ApiError(
+        "Error occurred while get event",
+        500,
+        "internal_error",
+        "EventService.getById"
+      );
+    }
+  }
+  static async deleteEvent(id: string): Promise<IEvent | null> {
+    const eventExisting = await EventModel.findById(id);
+
+    if (!eventExisting) {
+      throw new NotFoundError("Event not found");
+    }
+
+    const deletedEvent = await EventModel.findOneAndDelete({ _id: id });
+
+    if (!deletedEvent) {
+      throw new NotFoundError("Event not found");
+    }
+    return deletedEvent;
   }
 }
 

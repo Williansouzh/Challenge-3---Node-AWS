@@ -18,10 +18,29 @@ class EventController {
       next(error);
     }
   }
+  static async getById(req: Request, res: Response, next: NextFunction) {
+    const id: string = req.body.id;
+    try {
+      const event = await EventService.getByID(id);
+      res.json(event);
+    } catch (error) {
+      next(error);
+    }
+  }
   static async getAllEvents(req: Request, res: Response, next: NextFunction) {
     try {
       const allEvents = await EventService.getAllEvents();
       res.json(allEvents);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+  static async deleteEvent(req: Request, res: Response, next: NextFunction) {
+    const id = req.body.id;
+    try {
+      const deletedEvent = await EventService.deleteEvent(id);
+      res.json(deletedEvent);
     } catch (error) {
       console.log(error);
       next(error);
