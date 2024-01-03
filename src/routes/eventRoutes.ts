@@ -10,6 +10,6 @@ eventRoutes.get("/events", EventController.getAllEvents);
 
 eventRoutes.get("/events/:id", EventController.getById);
 
-eventRoutes.delete("/events", EventController.deleteEvent);
+eventRoutes.delete("/events/:id", EventController.deleteEvent);
 
 export default eventRoutes;

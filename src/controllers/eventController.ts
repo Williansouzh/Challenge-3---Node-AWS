@@ -37,7 +37,7 @@ class EventController {
     }
   }
   static async deleteEvent(req: Request, res: Response, next: NextFunction) {
-    const id = req.body.id;
+    const id = req.params.id;
     try {
       const deletedEvent = await EventService.deleteEvent(id);
       res.json(deletedEvent);
