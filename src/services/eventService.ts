@@ -21,6 +21,20 @@ class EventService {
       );
     }
   }
+  static async getAllEvents() {
+    try {
+      const allEvents = await EventModel.find();
+      return allEvents;
+    } catch (error) {
+      console.log(error);
+      throw new ApiError(
+        "Error occurred while get events",
+        500,
+        "internal_error",
+        "EventService.getAllEvents"
+      );
+    }
+  }
 }
 
 export default EventService;

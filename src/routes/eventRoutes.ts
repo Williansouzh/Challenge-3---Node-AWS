@@ -6,5 +6,6 @@ const eventRoutes = Router();
 
 eventRoutes.use(authMiddleware);
 eventRoutes.post("/events", EventController.CreateEvent);
+eventRoutes.get("/events", EventController.getAllEvents);
 
 export default eventRoutes;

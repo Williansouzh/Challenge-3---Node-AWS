@@ -21,7 +21,7 @@ class EventController {
   static async getAllEvents(req: Request, res: Response, next: NextFunction) {
     try {
       const allEvents = await EventService.getAllEvents();
-      res.json({ event });
+      res.json(allEvents);
     } catch (error) {
       console.log(error);
       next(error);
