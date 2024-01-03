@@ -32,8 +32,7 @@ export const authMiddleware = async (
     token,
     process.env.JWT_SECRET_KEY ?? ""
   ) as JwtPayload;
-
-  const user = await UserModel.findById({ id });
+  const user = await UserModel.findById(id);
 
   if (!user) {
     throw new UnauthorizedError("Not authorized");
