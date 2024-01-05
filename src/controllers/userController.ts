@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import UserService from "@/services/userService";
-import { BadRequestError } from "@/helpers/api-errors";
-import IUser from "@/interfaces/userInterface";
-import UserModel from "@/database/models/userModel";
+import UserService from "../services/userService";
+import { BadRequestError } from "../helpers/api-errors";
+import IUser from "../interfaces/userInterface";
+import UserModel from "../database/models/userModel";
 
 interface SignUpRequest extends Request {
   body: {

@@ -1,9 +1,9 @@
-import { BadRequestError, UnauthorizedError } from "@/helpers/api-errors";
+import { BadRequestError, UnauthorizedError } from "../helpers/api-errors";
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
-import IUser from "@/interfaces/userInterface";
-import UserModel from "@/database/models/userModel";
+import IUser from "../interfaces/userInterface";
+import UserModel from "../database/models/userModel";
 dotenv.config();
 
 declare global {

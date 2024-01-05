@@ -1,6 +1,10 @@
-import EventModel from "@/database/models/eventModel";
-import { ApiError, BadRequestError, NotFoundError } from "@/helpers/api-errors";
-import { IEvent } from "@/interfaces/eventInterface";
+import EventModel from "../database/models/eventModel";
+import {
+  ApiError,
+  BadRequestError,
+  NotFoundError,
+} from "../helpers/api-errors";
+import { IEvent } from "../interfaces/eventInterface";
 
 class EventService {
   static async createEvent(eventData: IEvent) {
@@ -66,15 +70,20 @@ class EventService {
     }
     return deletedEvent;
   }
-  static WeeklyEventDeletion(week: string) {
+  static async WeeklyEventDeletion(week: string) {
     try {
-      const events = EventModel.find({ week });
+      const events = EventModel.find({ dayOfWeek: week });
 
       if (!events) {
         throw new NotFoundError(`No events found in week ${week}`);
       }
+      const deletedEvents = await EventModel.deleteMany({ dayOfWeek: week });
 
-      return events;
+      if (!deletedEvents) {
+        throw new NotFoundError(`No events found in week ${week}`);
+      }
+
+      return { deletedEvents: events };
     } catch (error) {
       console.log(error);
       throw new ApiError(

@@ -1,5 +1,5 @@
-import { IEvent } from "@/interfaces/eventInterface";
-import EventService from "@/services/eventService";
+import { IEvent } from "../interfaces/eventInterface";
+import EventService from "../services/eventService";
 import { NextFunction, Request, Response } from "express";
 
 class EventController {

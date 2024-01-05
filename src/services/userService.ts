@@ -1,7 +1,7 @@
-import UserModel from "@/database/models/userModel";
+import UserModel from "../database/models/userModel";
 import jwt from "jsonwebtoken";
-import { ApiError, UnauthorizedError } from "@/helpers/api-errors";
-import IUser from "@/interfaces/userInterface";
+import { ApiError, UnauthorizedError } from "../helpers/api-errors";
+import IUser from "../interfaces/userInterface";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
