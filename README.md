@@ -2,7 +2,7 @@
 
 # <center> User and Event Management API </center>
 
-<img src="./assets/compassUOL.jpg" alt="Compass Uol" width=900 height=380>
+<img src="https://example.com/compassUOL.jpg" alt="Compass Uol" width=900 height=380>
 
 <a id="ancora0"></a>
 <a name="Table of Content"></a>
@@ -31,11 +31,11 @@ Time to design your third challenge of the scholarship program! You must create 
 </p>  </font> <br />
 
 <p align="center">
-<img src="./assets/typescript.png" alt="TypeScript" width=80 height=40/>
-<img src="./assets/expressJs.png" alt="ExpressJS" width=100 height=35/>
-<img src="./assets/mongoDB.jpg" alt="MongoDB" width=80 height=35/>
-<img src="./assets/node.jpg" alt="Node.JS" width=90 height=35/>
-<img src="./assets/swagger.png" alt="Swagger" width=90 height=35/>
+<img src="https://example.com/typescript.png" alt="TypeScript" width=80 height=40/>
+<img src="https://example.com/expressJs.png" alt="ExpressJS" width=100 height=35/>
+<img src="https://example.com/mongoDB.jpg" alt="MongoDB" width=80 height=35/>
+<img src="https://example.com/node.jpg" alt="Node.JS" width=90 height=35/>
+<img src="https://example.com/swagger.png" alt="Swagger" width=90 height=35/>
 </p>
 </br>
 
