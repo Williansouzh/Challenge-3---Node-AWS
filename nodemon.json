@@ -1,6 +1,0 @@
-{
-  "watch": ["src"],
-  "ext": "ts",
-  "exec": "nodemon --exec ts-node -r tsconfig-paths/register ./src/server.ts",
-  "delay": 500
-}
