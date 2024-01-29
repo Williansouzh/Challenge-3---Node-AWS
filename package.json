@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "secure-mode": "jest --watch --verbose=true",
     "start:dev": "nodemon --exec ts-node ./src/server.ts"
   },
   "keywords": [],
@@ -12,9 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
+    "joi": "^17.12.0",
     "jsonwebtoken": "^9.0.2",
+    "jwt-simple": "^0.5.6",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.1",
     "nodemon": "^3.0.3",
@@ -24,6 +28,10 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
-    "@types/jsonwebtoken": "^9.0.5"
+    "@types/jest": "^29.5.11",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/supertest": "^6.0.2",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.1.2"
   }
 }
